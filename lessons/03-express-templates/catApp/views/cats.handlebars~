@@ -1,0 +1,6 @@
+<h1>Cats</h1>
+<ul>
+{{#each cat}}
+ <li>{{this.name}} is {{this.age}} years old, and has {{this.color[0]}} and {{this.color[1]}} fur.</li>
+{{/each}}
+</ul>
