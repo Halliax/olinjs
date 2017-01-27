@@ -45,7 +45,7 @@ var cats = function(req, res) {
 var bycolor = function(req,res) {
   var cats = db.getAll();
   var rightCats = [];
-  var sortColor = (req.app.get("reqColor"));
+  var sortColor = req.params.color;
   cats.forEach(function(cat) {
     if (cat.color[0] === sortColor || cat.color[1] === sortColor) {
       rightCats.push(cat);
@@ -68,15 +68,6 @@ var deleteOldCat = function(req,res){
   res.render("deleteCat",{"deleted":[oldestCat]})
 };
 
-
-// var home = function(req, res){
-//   res.render("home", {"classes": [
-//     {name:"Olin.js", teacher:"Cynthia"},
-//     {name:"UOCD", teacher:"Sara"},
-//     {name:"Six Books", teacher:"Rob"},
-//     {name:"Biology", teacher:"Theresa"}]
-//   });
-// };
 
 module.exports.home = home;
 module.exports.newCat = newCat;
