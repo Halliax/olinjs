@@ -28,6 +28,9 @@ pids
 # Debug log from npm
 **/npm-debug.log
 
+# Temp files
+*~
+
 # For Mac users without global gitignore
 # http://islegend.com/development/setting-global-gitignore-mac-windows/
 **/.DS_Store
