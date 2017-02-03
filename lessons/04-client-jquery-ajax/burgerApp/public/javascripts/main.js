@@ -1,10 +1,13 @@
 var $form = $("#ajax-form");
-var $edit = $(".edit-form");
 
 var onSuccess = function(data, status) {
-  var item = ("<li><div id=" + data._id + "><span class='name'>" + data.name + "</span> - price: $<span class='price'>" + data.price + "</span>, in stock: <span class='stockstate'>" + data.inStock + "</span>\
+  var item = ("<li><div id=" + data._id + "><span class='name'>" + data.name + "</span> - price:\
+  $<span class='price'>" + data.price + "</span>, in stock: <span class='stockstate'>" + data.inStock + "</span>\
   <button class='stock' type='button'><span class='stockbutton'>Out-of-Stock</span></button>\
-  <button class='edit' type='button'>Edit</button></div></li>");
+  <form class='edit-form' action='edit' method='POST'>\
+    Name: <input type='text' name='name'/><br/>\
+    Price: <input type='number' name='price'/><br/>\
+    <input type='submit' value='Edit'>");
   $("#result").append(item);
 };
 
@@ -19,6 +22,7 @@ var onSuccessfulStock = function(data, status) {
 };
 
 var onSuccessfulEdit = function(data, status) {
+  console.log(data.name,data.price,data._id);
   $('#'+data._id +' span.name').html(data.name);
   $('#'+data._id +' span.price').html(data.price);
 };
@@ -37,12 +41,11 @@ $("#ingredient-list").on('click','.stock',function() {
     .error(onError);
 });
 
-$edit.submit(function(event) {
+$("#ingredient-list").on('submit','.edit-form',function(event) {
   event.preventDefault();
   var ingredientID = $(this).parent().attr('id');
-  var name = $form.find("[name='name']").val();
-  var price = $form.find("[name='price']").val();
-  console.log(name, price);
+  var name = $(this).find("[name='name']").val();
+  var price = $(this).find("[name='price']").val();
   $.post("edit", {
     id: ingredientID,
     name: name,

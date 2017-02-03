@@ -31,6 +31,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/ingredients', ingredients.ingGET);
 app.post('/ingredients', ingredients.ingPOST);
 app.post('/stock', ingredients.stockPOST);
-// app.post('/edit', ingredients.editPOST);
+app.post('/edit', ingredients.editPOST);
 
 app.listen(3000);

@@ -48,28 +48,29 @@ routes.stockPOST = function(req, res) {
   });
 };
 
-// routes.editPOST = function(req, res) {
-//   var id = req.body.id;
-//   var name = req.body.name;
-//   var price = req.body.price;
-//   Ingredient.findById(id, function (err,doc) {
-//     if(err) {
-//       console.error("error finding document:", err);
-//     }
-//     ingredient = doc;
-//     if name === ('') {
-//       name = ingredient.name;
-//     }
-//     if price === (null) {
-//       price = ingredient.price;
-//     }
-//     ingredient.update({$set: {'name': name,'price': price}}, {new:true}, function(err, newDoc) {
-//       if(err) {
-//         console.error("error updating name/price:", err);
-//       }
-//       res.send(newDoc);
-//     });
-//   });
-// };
+routes.editPOST = function(req, res) {
+  var id = req.body.id;
+  Ingredient.findById(id, function (err,doc) {
+    if(err) {
+      console.error("error finding document:", err);
+    }
+    ingredient = doc;
+    var name = req.body.name;
+    var price = req.body.price;
+    if (name === '') {
+      name = ingredient.name;
+    }
+    if (price === '') {
+      price = ingredient.price;
+    }
+    Ingredient.findOneAndUpdate({'_id': id},{$set: {'name': name,'price': price}}, {new:true}, function(err, newDoc) {
+      if(err) {
+        console.error("error updating name/price:", err);
+      }
+      console.log(newDoc);
+      res.send(newDoc);
+    });
+  });
+};
 
 module.exports = routes;
