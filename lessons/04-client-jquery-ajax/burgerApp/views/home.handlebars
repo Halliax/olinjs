@@ -1,0 +1,26 @@
+<h1>Terrible Burgers. >:(</h1>
+
+<h2>Add</h2>
+<form id="ajax-form" action="ingredients" method="POST">
+  Name: <input type="text" name="name"/><br/>
+  Price: <input type="number" name="price"/><br/>
+  <input type="submit" value="Submit">
+</form>
+
+
+<h2>Ingredients</h2>
+<div id="ingredient-list">
+  <ul>
+  {{#each ingredient}}
+   <li><div id={{this._id}}><span class='name'>{{this.name}}</span> - price: $<span class='price'>{{this.price}}</span>, in stock: <span class='stockstate'>{{this.inStock}}</span>
+   <button class="stock" type="button"><span class='stockbutton'>{{#if this.inStock}}Out-of-Stock{{else}}Add{{/if}}</span></button>
+   <!-- <button class="edit" type="button">Edit</button> -->
+   <form class="edit-form" action="edit" method="POST">
+     Name: <input type="text" name="name"/><br/>
+     Price: <input type="number" name="price"/><br/>
+     <input type="submit" value="Edit">
+   </form></div></li>
+  {{/each}}
+   <div id="result"></div>
+  </ul>
+</div>
