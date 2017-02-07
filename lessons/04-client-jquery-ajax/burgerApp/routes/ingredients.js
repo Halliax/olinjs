@@ -1,18 +1,65 @@
 var path = require('path');
 var express = require('express');
 var Ingredient = require('../models/ingredientModel.js');
+var Burger = require('../models/burgerModel.js');
 
 Ingredient.find({}, function(err, ingredients){
   console.log(ingredients);
 });
 
+Burger.find({}, function(err, burgers) {
+  console.log(burgers);
+});
+
 var routes = {};
+var orderCount = 0;
 
 //get all ingredients, render list
 routes.ingGET = function(req, res) {
   Ingredient.find({}).sort({price: 1}).exec(function(err,ingredients) {
     if(err) return console.error(err);
-    res.render("home", {"ingredient": ingredients});
+    res.render("ingredients", {"ingredient": ingredients});
+  });
+};
+
+routes.orderGET = function(req, res) {
+  Ingredient.find({}).sort({price: 1}).exec(function(err,ingredients) {
+    if(err) return console.error(err);
+    res.render("order", {"ingredient": ingredients});
+  });
+};
+
+routes.burgerGET = function(req, res) {
+  Burger.find({}).sort({orderNumber: 1}).exec(function(err,burgers) {
+    if(err) return console.error(err);
+    res.render("kitchen", {"burger": burgers});
+  });
+};
+
+routes.burgerPOST = function(req, res) {
+  var burger = new Burger({
+    orderNumber: orderCount,
+    ingredients: req.body['ingredients[]']
+  });
+  burger.save(function(err) {
+    if(err) {
+      console.error("error saving burger:", err);
+    }
+  });
+  orderCount += 1;
+  res.send(burger);
+};
+
+routes.burgerDELETE = function(req, res) {
+  var id = req.body.id;
+  Burger.findById(id, function (err,doc) {
+    if(err) {
+      console.error("error finding document:", err);
+    }
+    burger = doc;
+    burger.remove(function (err, doc) {
+      res.send(doc);
+    });
   });
 };
 

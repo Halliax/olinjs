@@ -1,5 +1,8 @@
 var $form = $("#ajax-form");
 
+var totalCost = 0;
+var submittedIngredients = [];
+
 var onSuccess = function(data, status) {
   var item = ("<li><div id=" + data._id + "><span class='name'>" + data.name + "</span> - price:\
   $<span class='price'>" + data.price + "</span>, in stock: <span class='stockstate'>" + data.inStock + "</span>\
@@ -22,9 +25,17 @@ var onSuccessfulStock = function(data, status) {
 };
 
 var onSuccessfulEdit = function(data, status) {
-  console.log(data.name,data.price,data._id);
   $('#'+data._id +' span.name').html(data.name);
   $('#'+data._id +' span.price').html(data.price);
+};
+
+var onSuccessfulBurger = function(data, status) {
+  alert("Burger submitted! Your order number is " + data.orderNumber);
+  submittedIngredients = [];
+};
+
+var onSuccessfulDelete = function(data) {
+  $('#'+data._id).remove();
 };
 
 var onError = function(data, status) {
@@ -41,6 +52,39 @@ $("#ingredient-list").on('click','.stock',function() {
     .error(onError);
 });
 
+$("input.ing-check").click(function(event) {
+  var ingredientID = $(this).parent().attr('id');
+  var price = Number($('#' + ingredientID + ' span.price').html());
+  if ($(this).prop("checked")) {
+    totalCost += price;
+  }
+  else {
+    totalCost -= price;
+  }
+  $('#cost-counter').html(totalCost);
+});
+
+$('#burger-form').submit(function(event) {
+  event.preventDefault();
+  $("#burger-form input:checkbox:checked").each(function() {
+    submittedIngredients.push($(this).parent().find('span.name').text());
+  });
+  $.post("burger", {
+    ingredients: submittedIngredients
+  })
+    .done(onSuccessfulBurger)
+    .error(onError);
+});
+
+$("button.completed").click(function() {
+  var burgerID = $(this).parent().attr('id');
+  $.post("delete", {
+    id:burgerID
+  })
+    .done(onSuccessfulDelete)
+    .error(onError);
+});
+
 $("#ingredient-list").on('submit','.edit-form',function(event) {
   event.preventDefault();
   var ingredientID = $(this).parent().attr('id');
@@ -54,6 +98,7 @@ $("#ingredient-list").on('submit','.edit-form',function(event) {
     .done(onSuccessfulEdit)
     .error(onError);
 });
+
 
 $form.submit(function(event) {
   event.preventDefault();

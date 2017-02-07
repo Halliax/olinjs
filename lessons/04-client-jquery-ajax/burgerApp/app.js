@@ -29,8 +29,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/ingredients', ingredients.ingGET);
+app.get('/order', ingredients.orderGET);
+app.get('/kitchen', ingredients.burgerGET);
 app.post('/ingredients', ingredients.ingPOST);
 app.post('/stock', ingredients.stockPOST);
 app.post('/edit', ingredients.editPOST);
+app.post('/burger', ingredients.burgerPOST);
+app.post('/delete', ingredients.burgerDELETE);
 
 app.listen(3000);

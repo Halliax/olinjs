@@ -1,0 +1,12 @@
+<h1>Pending Terrible Crap</h1>
+
+
+<h2>"Burgers"</h2>
+<ul id="burger-list">
+{{#each burger}}
+ <li id={{this._id}}>
+   Order #<span class="orderNumber">{{this.orderNumber}}</span>: <span class='ingredients'>{{this.ingredients}}</span>
+   <button class="completed" type="button">completed</button>
+ </li>
+{{/each}}
+</ul>

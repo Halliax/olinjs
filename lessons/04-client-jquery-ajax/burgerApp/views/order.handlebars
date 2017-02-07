@@ -1,0 +1,16 @@
+<h1>Order an Awful Burger!</h1>
+
+
+<h2>Ingredients</h2>
+<div id="ingredient-checkboxes">
+  <form id="burger-form" action="burger" method="POST"><ul>
+  {{#each ingredient}}
+   <li><div id={{this._id}}>
+    <input class="ing-check" type="checkbox" {{#unless inStock}}disabled="disabled"{{/unless}}><span class='name'>{{this.name}}</span> - price: $<span class='price'>{{this.price}}</span></input>
+   </div></li>
+  {{/each}}
+  </ul>
+    <input type="submit" value="Submit">
+  </form>
+  <p>Total: $<span id="cost-counter">0</span></p>
+</div>
