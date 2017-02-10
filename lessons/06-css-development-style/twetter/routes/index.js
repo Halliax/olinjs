@@ -18,6 +18,12 @@ routes.loginGET = function(req, res) {
   res.render("login");
 };
 
+//log out, redirect
+routes.logoutGET = function(req, res) {
+  req.session.reset();
+  res.redirect('/');
+};
+
 //log in with a new or existing user
 routes.loginPOST = function(req, res) {
   User.findOne({username: req.body.username}, function(err, result) {
@@ -39,15 +45,14 @@ routes.loginPOST = function(req, res) {
       user = result;
     }
     req.session.user = user;
-    res.redirect('/main');
+    res.redirect('/dashboard');
   });
 };
 
 //get all twets and users, render list (ample use of
 //https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions)
-routes.twetGET = function(req, res) {
+routes.dashGET = function(req, res) {
   if (req.session && req.session.user) {
-    console.log("user session true");
     User.findOne({username: req.session.user.username}, function (err, user) {
       if (user) {
         console.log(user);
@@ -59,7 +64,7 @@ routes.twetGET = function(req, res) {
     if(err) return console.error(err);
     User.find().sort({_id: -1}).exec(function (err,users) {
       if(err) return console.error(err);
-      res.render("twets", {"twet": twets, "user": users});
+      res.render("dashboard", {"twet": twets, "user": users});
     });
   });
 };
@@ -78,6 +83,20 @@ routes.twetPOST = function(req, res) {
     }
   });
   res.send(twet);
+};
+
+//utility function to return current session user
+routes.userGET = function(req, res) {
+  if (req.session && req.session.user) {
+    User.findOne({username: req.session.user.username}, function (err, user) {
+      if (user) {
+        res.send(user);
+      }
+      else {
+        res.send('');
+      }
+    });
+  }
 };
 
 

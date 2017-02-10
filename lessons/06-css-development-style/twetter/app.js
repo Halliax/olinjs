@@ -34,8 +34,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/main', index.twetGET);
+app.get('/dashboard', index.dashGET);
 app.get('/', index.loginGET);
+app.get('/logout', index.logoutGET);
+app.get('/user', index.userGET);
 app.post('/post', index.twetPOST);
 app.post('/login', index.loginPOST);
 

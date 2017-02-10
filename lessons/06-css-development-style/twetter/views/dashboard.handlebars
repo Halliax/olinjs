@@ -22,11 +22,13 @@
           <li id="template-li">
             <p class='body'></p>
             <p class='author'></p>
+            <p class='hidden-id-tag'></p>
           </li>
         {{#each twet}}
           <li id={{this._id}}>
             <p class='body'>{{this.bodyText}}</p>
             <p class='author'>{{this.user}}</p>
+            <p class='hidden-id-tag'>{{this.userId}}</p>
          </li>
         {{/each}}
       </ul>
