@@ -1,0 +1,43 @@
+<h1>Twetter</h1>
+
+<h5>Twet</h5>
+<div class="row">
+  <div class="nine columns">
+    <form id="twet-post-form" action="post" method="POST">
+      <input type="text" name="twet"/>
+      <input type="submit" value="Post" {{#unless currentUser}}disabled{{/unless}}>
+      <p class='author'>{{currentUser.username}}</p>
+    </form>
+  </div>
+  <div class="three columns">
+      <button id="login-logout" type="button">{{#if currentUser}}Logout{{else}}Login{{/if}}</button>
+  </div>
+</div>
+
+
+<h3>Feed</h3>
+<div class="row">
+    <div class="nine columns">
+      <ul id="twet-list">
+          <li id="template-li">
+            <p class='body'></p>
+            <p class='author'></p>
+          </li>
+        {{#each twet}}
+          <li id={{this._id}}>
+            <p class='body'>{{this.bodyText}}</p>
+            <p class='author'>{{this.user}}</p>
+         </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="three columns">
+      <ul id="user-list">
+      {{#each user}}
+        <li id={{this._id}}>
+          <p class='user'>{{this.username}}</p>
+       </li>
+      {{/each}}
+      </ul>
+    </div>
+</div>
