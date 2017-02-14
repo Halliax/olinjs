@@ -31,6 +31,9 @@ pids
 # Temp files
 *~
 
+OAuth thing
+auth.js
+
 # For Mac users without global gitignore
 # http://islegend.com/development/setting-global-gitignore-mac-windows/
 **/.DS_Store
