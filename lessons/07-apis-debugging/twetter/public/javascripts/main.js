@@ -28,7 +28,7 @@ var onSuccessfulPost = function(data, status) {
 
 // changes window display to dash on login
 var onSuccessfulLogin = function(data, status) {
-  window.location.href = "/dashboard";
+  window.location.href = "/";
 };
 
 // error catching
@@ -40,11 +40,11 @@ var onError = function(data, status) {
 // defines behavior of login/logout button
 $("#login-logout").click(function() {
   if (!currentUser) {
-    window.location.href = "/";
+    window.location.href = "/login";
   }
   else {
     $.get('logout');
-    window.location.href=  "/";
+    window.location.href=  "/login";
   }
 });
 
@@ -62,9 +62,12 @@ $('#user-list').on('click', 'li', function() {
 $loginForm.submit(function(event) {
   event.preventDefault();
   var username = $loginForm.find("[name='username']").val();
+  var password = $loginForm.find("[name='password']").val();
   $loginForm.find("[name='username']").val('');
+  $loginForm.find("[name='password']").val('');
   $.post("login", {
-    username: username
+    username: username,
+    password: password
   })
     .done(onSuccessfulLogin)
     .error(onError);
