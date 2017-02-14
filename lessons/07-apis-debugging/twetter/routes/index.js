@@ -87,16 +87,7 @@ routes.twetPOST = function(req, res) {
 
 //utility function to return current session user
 routes.userGET = function(req, res) {
-  if (req.session && req.session.user) {
-    User.findOne({username: req.session.user.username}, function (err, user) {
-      if (user) {
-        res.send(user);
-      }
-      else {
-        res.send('');
-      }
-    });
-  }
+  res.send(req.user);
 };
 
 
