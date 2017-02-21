@@ -14,8 +14,11 @@ var User = require('./models/userModel.js');
 
 var app = express();
 
+var PORT = process.env.PORT || 3000;
+var mongoURI = process.env.MONGOURI || 'mongodb://localhost/twetter';
+
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/twetter');
+mongoose.connect(mongoURI);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -119,9 +122,13 @@ app.get('/user', ensureAuthenticated, index.userGET);
 app.post('/post', index.twetPOST);
 app.post('/login', index.loginPOST);
 
-app.listen(3000);
+app.listen(PORT, function() {
+  console.log("Running on port: ", PORT);
+});
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
     res.sendStatus(401);
 }
+
+module.exports = app;
