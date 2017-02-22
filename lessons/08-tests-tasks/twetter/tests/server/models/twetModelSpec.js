@@ -7,7 +7,8 @@ describe('Twet Model', function() {
     var twet = new Twet({
       bodyText: "school for ants!",
       user: "merf",
-      userId: '589e2014a2a9d1217319b0e7'
+      userId: '589e2014a2a9d1217319b0e7',
+      _id: '58add7bac9f61320b4bf1e01'
     });
     twet.save(function(err) {
       if (err) {
@@ -18,17 +19,11 @@ describe('Twet Model', function() {
   });
 
   it('should remove a twet by id', function(done) {
-    Twet.findOne({}, {sort: {_id: 1}}, function(err, twet) {
+    Twet.findOneAndRemove({ '_id': '58add7bac9f61320b4bf1e01' }, function(err, twet) {
       if (err) {
         return done(err);
       }
-      Twet.remove({ '_id': twet._id }, function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
+      done();
     });
   });
-
 });
