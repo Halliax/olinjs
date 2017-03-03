@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 
@@ -8,32 +8,78 @@ var App = React.createClass({
   // App stores list items (inititializes blank)
   getInitialState: function(){
     return {
-      items: []
+      items: [],
+      counter: 0,
+      editFlag: undefined,
+      selectedFilter: '0'
     }
   },
   // Function to pass to addItem object, takes an item, stores, updates
   addItem: function(item){
     this.state.items.push(item);
+    this.state.counter++;
     this.setState({
       items: this.state.items
     });
   },
-
-  toggleChecked: function(id){
+  // push edits by index of current edit flag, unset edit flag
+  editItem: function(item){
     const items = this.state.items;
-    var index = items.indexOf(function (obj) {
-      return obj.id === id;
-    });
-    items[index] = {id: id, checked: !items[index].checked};
+    items[this.state.editFlag] = {name: item.name, checked: items[this.state.editFlag].checked};
     this.setState(items);
+    this.setState({
+      editFlag: undefined
+    });
+  },
+  // delete item by index
+  deleteItem: function(index){
+    const items = this.state.items;
+    if (!items[index].checked) {
+      this.state.counter--;
+    }
+    items.splice(index, 1);
+    this.setState(items);
+  },
+  // sets edit flag when edit button is clicked
+  clickEdit: function(index){
+    this.setState({
+      editFlag: index
+    });
+  },
+  // toggle checked field by index
+  toggleChecked: function(index){
+    const items = this.state.items;
+    items[index] = {name: items[index].name, checked: !items[index].checked};
+    this.setState(items);
+    if(items[index].checked) {
+      this.state.counter--;
+    } else {
+      this.state.counter++;
+    }
+  },
+  // handle radio button filter changes
+  handleFilter: function(e){
+    this.setState({
+      selectedFilter: e.target.value
+    });
   },
   // render title, addItem object, item list
   render: function(){
     return (
       <div>
         <h3>To Do</h3>
-        <AddItem addNew={this.addItem} />
-        <List items={this.state.items} toggleChecked={this.toggleChecked.bind(this)} />
+        <AddItem addNew={this.addItem} prev='' />
+        <h4>Items</h4>
+        <List
+          items={this.state.items}
+          editFlag={this.state.editFlag}
+          toggleChecked={this.toggleChecked}
+          clickEdit={this.clickEdit}
+          editItem={this.editItem}
+          deleteItem={this.deleteItem}
+          selectedFilter={this.state.selectedFilter}/>
+        <p>Active: {this.state.counter}</p>
+        <Options selected={this.state.selectedFilter} handleChange={this.handleFilter} />
       </div>
     )
   }
@@ -44,7 +90,7 @@ var AddItem = React.createClass({
   // box starts blank, state is stored in newItem field
   getInitialState: function(){
     return {
-      newItem: {name:'', checked:false}
+      newItem: {name:this.props.prev, checked:false}
     }
   },
   // checks that it was passed a function from App
@@ -54,7 +100,7 @@ var AddItem = React.createClass({
   // update newItem component state when text field changes
   updateNewItem: function(e){
     this.setState({
-      newItem: {name:e.target.value, checked:false, id:e.target.value}
+      newItem: {name:e.target.value, checked:false}
     });
   },
   // handles form submission, passes new value to App addItem function
@@ -88,17 +134,39 @@ var List = React.createClass({
     	items: []
     }
   },
-  // turns the items array from props into lis, renders into list
+  // turns the items array from props into ListItems, renders into list
   render: function() {
     var toggleChecked = this.props.toggleChecked;
-    var listItems = this.props.items.map(function(item){
-      return <ListItem name={item.name} checked={item.checked} id={item.id} onChange={toggleChecked} />;
+    var onClickEdit = this.props.clickEdit;
+    var editItem = this.props.editItem;
+    var flag = this.props.editFlag;
+    var onDelete = this.props.deleteItem;
+    var filter = this.props.selectedFilter;
+    // filters items for rendering based on selectedFilter option
+    var activeItems = this.props.items.filter(function(item) {
+      if(filter === '0' || filter === '1' && !item.checked || filter === '2' && item.checked){
+        return item;
+      }
+    });
+    // renders filtered items
+    var listItems = activeItems.map(function(item,i){
+      if(i === flag) {
+        return <AddItem addNew={editItem} prev={item.name} />
+      }
+      else {
+        return <ListItem name={item.name}
+                checked={item.checked}
+                index={i}
+                toggleChecked={toggleChecked}
+                onClickEdit={onClickEdit}
+                onDelete={onDelete}/>;
+      }
     });
     return (
         <div>
-          <form>
+          <ul>
             {listItems}
-          </form>
+          </ul>
         </div>
     );
   }
@@ -109,14 +177,52 @@ var ListItem = React.createClass({
   render: function() {
     return (
       <div>
-        <label><input type="checkbox"
+        <label onDoubleClick={() => this.props.onClickEdit(this.props.index)}>
+          <input type="checkbox"
           checked={this.props.checked}
-          onChange={() => this.props.onChange(this.props.id)} />
+          onChange={() => this.props.toggleChecked(this.props.index)} />
           {this.props.name}</label>
+        <input type="button"
+          value="X"
+          onClick={() => this.props.onDelete(this.props.index)} />
       </div>
     );
   }
 });
 
+// radio buttons for filtering
+var Options = React.createClass({
+  // render form
+  render: function() {
+    return (
+      <form>
+        <div className="radio">
+          <label>
+            <input type="radio" value='0'
+              checked={this.props.selected === '0'}
+              onChange={this.props.handleChange} />
+            All
+          </label>
+        </div>
+        <div className="radio">
+          <label>
+            <input type="radio" value='1'
+              checked={this.props.selected === '1'}
+              onChange={this.props.handleChange} />
+            Active
+          </label>
+        </div>
+        <div className="radio">
+          <label>
+            <input type="radio" value='2'
+              checked={this.props.selected === '2'}
+              onChange={this.props.handleChange} />
+            Completed
+          </label>
+        </div>
+      </form>
+    );
+  }
+});
 
 export default App;
