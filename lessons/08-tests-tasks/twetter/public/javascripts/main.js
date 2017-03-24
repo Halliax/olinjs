@@ -1,3 +1,4 @@
+//You're missing a delete functionality for each of your tweets. Also, remove console logs that are specifc to just debugging. Good naming of the different functions and variables.
 var $postForm = $("#twet-post-form");
 var $loginForm = $("#login-form");
 var $templateLi = $('#template-li');

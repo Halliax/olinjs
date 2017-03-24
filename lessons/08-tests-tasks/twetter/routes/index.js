@@ -1,3 +1,4 @@
+//I like that you comment on each post that you have, but it would be nice if you split this file into multiple files grouping them (user-specific, login-specific, tweets-specifc). I would also use express router to clean up and make api specific routes, but  since we're doing some rendering from the backend, it's not as easy to do. Your local stategy is working though!!!!
 var path = require('path');
 var express = require('express');
 var Twet = require('../models/twetModel.js');
@@ -46,6 +47,7 @@ routes.dashGET = function(req, res) {
   if (req.user) {
     User.findOne({username: req.user.username}, function (err, user) {
       if (user) {
+        //Remove console logs that were just for your debugging, and comment the specifics of how you're using mongoose queries.
         console.log(user);
         res.locals.currentUser = user;
         Twet.find().sort({_id: -1}).exec(function(err,twets) {

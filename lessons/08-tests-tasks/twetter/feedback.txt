@@ -1,0 +1,12 @@
+Homework Feedback:
+
+Functionality:
+- Completion: You have all of the functionalities (including tests and OAuth!); however, you don't have delete tweet working. Also, awesome tests. I appreciate that you sectioned them out and that they are detailed. There are two that don't pass for me: 'should return 200 OK on authenticated GET /' and 'should get user session for current user'. Both seem to be user specific, which might make sense because you're not setting a user session anywhere. (16/20)
+- Bug Free: The app does seem bug free. Again, you don't have deleting tweets working. It's a good idea to remove your log statements when you are in production. (10/10)
+
+Quality:
+- Good Coding Practices: You use good styling practices, specifically the way you group your different jquery calls and reuse functions. The tests are written out nicely and follow the right syntax. (10/10)
+- Readability: Functions and variables are named well, good comments and lines are not too long and sectioned well. (10/10)
+
+
+Good work!!!!!!

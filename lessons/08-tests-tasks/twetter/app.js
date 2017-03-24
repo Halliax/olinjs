@@ -1,3 +1,4 @@
+//Comment and section the parts in this file and look into using express router for api routes. Also, maybe utilize a separate authentication file for all things authentication related.
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
@@ -64,7 +65,7 @@ passport.use(new FacebookStrategy({
   }
 ));
 
-passport.use(new LocalStrategy(
+passport.use(new LocalStrategy( //good job on getting this working!!
   function(username, password, done) {
     User.findOne({ username: username }, function (err, user) {
       if (err) { return done(err); }
