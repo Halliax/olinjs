@@ -25,3 +25,5 @@ app.get('/cats/bycolor/:color',index.bycolor);
 app.get('/cats/delete/old', index.deleteOldCat);
 
 app.listen(3000);
+
+// It would be nice to have a few comments here, maybe for each section.

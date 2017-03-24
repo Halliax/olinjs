@@ -15,7 +15,7 @@ function Cat(){
   var cat = {
     name: names[Math.floor(Math.random()*names.length)],
     color: [colors[Math.floor(Math.random()*colors.length)],colors[Math.floor(Math.random()*colors.length)]],
-    age: Math.floor(Math.random() * 1001)
+    age: Math.floor(Math.random() * 1001) // These are old cats.
   };
   return cat;
 }
@@ -36,6 +36,7 @@ var newCat = function(req, res) {
 var cats = function(req, res) {
   allCats = db.getAll();
   // adapted from http://stackoverflow.com/questions/1069666/sorting-javascript-object-by-property-value
+  // Awesome citing your references!!!!!
   allCats.sort(function(a, b) {
     return a.age - b.age;
   });
@@ -51,6 +52,7 @@ var bycolor = function(req,res) {
       rightCats.push(cat);
     }
   });
+  console.log(rightCats)
   res.render("cats", {"cat": rightCats});
 };
 
