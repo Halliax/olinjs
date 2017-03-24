@@ -1,4 +1,4 @@
-//Comment and section the parts in this file and look into using express router for api routes.
+//Comment and section the parts in this file and look into using express router for api routes. Also, maybe utilize a separate authentication file for all things authentication related.
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
@@ -10,7 +10,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var session = require("express-session");
 var index = require('./routes/index');
-// var auth = require('./auth');
+var auth = require('./auth');
 var User = require('./models/userModel.js');
 
 var app = express();
@@ -35,35 +35,35 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-// passport.use(new FacebookStrategy({
-//     clientID: auth.FACEBOOK_APP_ID,
-//     clientSecret: auth.FACEBOOK_APP_SECRET,
-//     callbackURL: auth.FACEBOOK_CALLBACK_URL
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     User.findOne({facebookId: profile.id}, function(err, result) {
-//       if(err) {
-//         return console.error(err);
-//       }
-//       var user;
-//       if (result === null) {
-//         user = new User({
-//           username: profile.displayName,
-//           facebookId: profile.id
-//         });
-//         user.save(function(err) {
-//           if(err) {
-//             return console.error("error saving user:", err);
-//           }
-//         });
-//       }
-//       else {
-//         user = result;
-//       }
-//       return done(err, user);
-//     });
-//   }
-// ));
+passport.use(new FacebookStrategy({
+    clientID: auth.FACEBOOK_APP_ID,
+    clientSecret: auth.FACEBOOK_APP_SECRET,
+    callbackURL: auth.FACEBOOK_CALLBACK_URL
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOne({facebookId: profile.id}, function(err, result) {
+      if(err) {
+        return console.error(err);
+      }
+      var user;
+      if (result === null) {
+        user = new User({
+          username: profile.displayName,
+          facebookId: profile.id
+        });
+        user.save(function(err) {
+          if(err) {
+            return console.error("error saving user:", err);
+          }
+        });
+      }
+      else {
+        user = result;
+      }
+      return done(err, user);
+    });
+  }
+));
 
 passport.use(new LocalStrategy( //good job on getting this working!!
   function(username, password, done) {
@@ -117,8 +117,8 @@ passport.deserializeUser(function(user, done) {
 app.get('/', index.dashGET);
 app.get('/login', index.loginGET);
 app.get('/logout', index.logoutGET);
-// app.get('/auth/facebook', index.fbAuthGET);
-// app.get('/auth/facebook/callback', index.fbAuthCallback);
+app.get('/auth/facebook', index.fbAuthGET);
+app.get('/auth/facebook/callback', index.fbAuthCallback);
 app.get('/user', ensureAuthenticated, index.userGET);
 app.post('/post', index.twetPOST);
 app.post('/login', index.loginPOST);
