@@ -1,13 +1,14 @@
+Do not merge this branch!
 
-Homework Feedback for Cat App
+**Homework Feedback for Cat App**
 
-The link you sent in the homework survey did not exist anymore, so I went back in your commit history to find your original cat app. In the commit I am looking at there are a lot of old/extra files you would want to remove, but I'm assuming you did this later after this commit. (Your "move cat app" commit appears to just remove the cat app instead of moving it.)
+The link you sent in the homework survey did not exist anymore, so I went back in your commit history to find your original cat app. In the commit I am looking at there are a lot of old/extra files you would want to remove, but I'm assuming you did this later after this commit. (Your "move cat app" commit appeared to removed the cat app instead of moving it.)
 
 
 Functionality:
 
 All tasks completed!* Awesome job, and your app appears to be bug free. :D 
-Second submission
+*Second submission
 
 
 Completion: (20/20)
@@ -19,8 +20,7 @@ Bug Free: (10/10)
 Quality:
 
 Your code was well organized and commented! It was very clear and readable.  
-Citing references when you took code from online was great. You should add comments
-describing your functions for the functions you did not do this for. 
+Citing references when you took code from online was great. A good next step would be adding comments describing your functions for the functions you did not do this for. 
 
 
 
@@ -32,4 +32,3 @@ Readability: (9/10)
 Summary: Nice work! Everything is functional and you followed good practices.
 
 (49/50)
-
