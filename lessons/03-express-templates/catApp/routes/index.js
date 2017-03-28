@@ -52,7 +52,6 @@ var bycolor = function(req,res) {
       rightCats.push(cat);
     }
   });
-  console.log(rightCats)
   res.render("cats", {"cat": rightCats});
 };
 
