@@ -1,0 +1,13 @@
+Do not merge this pull request! It is just for me to add my feedback on your Cat App with Mongoose.
+ 
+Homework Feedback for Cat App with Mongoose:
+
+Functionality:
+ - Completion: All of your features work. Your advanced query is pretty cool and I liked how easy you made it to use. Putting the lower and upper limits separated by a hyphen makes a lot of sense to a potential user of your cat app. (20/20)
+ - Bug Free: I did not find any bugs in your app. I would like you to think a little harder about edge cases because right now, your app crashes when I have 0 cats in my database and try and delete the oldest one. This is because you are trying to use the .remove() Mongoose operation on a null object. I would try and catch cases like that in the future. (10/10)
+
+Quality:
+ - Good Coding Practices: Your code is well-organized with the one makeCat() helper function above all of the functions you exported for your routes. There is a Cat.find() Mongoose operation you have at the top of index.js that never runs as far as I can tell. In the future, I would remove code left over from when you were probably debugging some portion of your app. I would also create a routes object that contains all of the functions you use for your routes and then just export that object, as opposed to writing a new module.exports line for each function. (9/10)
+ - Readability: Your code is well-commented and organized which makes it very nice to read. I think you could eliminate some of the files you don't need for this assignment like fakeDatabase.js. Other than that, your variable and function names are appropriate and your functions are clean and easy to follow, especially the way you do your Mongoose operations. (10/10)
+
+ Nice work!
