@@ -1,3 +1,5 @@
+// Delete files you are no longer using.
+
 var home = function(req, res){
   res.render("home", {"classes": [
     "Olin.js",

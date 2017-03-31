@@ -1,3 +1,8 @@
+// There are no comments here. 
+// While your code is pretty readable,
+// commenting is super important so that other people
+// (and future you) can understand it better.
+
 var $form = $("#ajax-form");
 
 var totalCost = 0;
