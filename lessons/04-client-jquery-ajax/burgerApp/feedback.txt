@@ -1,0 +1,20 @@
+Burger App Homework Feedback
+
+Everything seems to be working! Love the favicon. 
+Awesome website. Terrible burgers.
+
+Functionality
+All pages had full functionality and it doesn't look like there are any bugs!
+
+Completion: 20/20
+Bug Free: 10/10
+
+Quality
+Your styling is consistent throughout and you generally follow good practices!
+You forgot to delete the index.js from the boilerplate/in-class exercise, and left some unnecessary logs.
+Unfortunately the lack of comments hurt readability. Other than that, nice work!
+
+Good coding practices: 9/10
+Readability: 6/10
+
+Total: 45/50

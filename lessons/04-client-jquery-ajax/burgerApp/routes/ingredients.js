@@ -114,7 +114,7 @@ routes.editPOST = function(req, res) {
       if(err) {
         console.error("error updating name/price:", err);
       }
-      console.log(newDoc);
+      console.log(newDoc); // Probably don't need this console.log. It's usually good to get rid of these when you are done.
       res.send(newDoc);
     });
   });

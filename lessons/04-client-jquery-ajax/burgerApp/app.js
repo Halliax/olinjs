@@ -1,3 +1,5 @@
+// Some comments would be nice here for style/readability. 
+// What you have here is pretty straightforward, but it's a good habit to get into.
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
