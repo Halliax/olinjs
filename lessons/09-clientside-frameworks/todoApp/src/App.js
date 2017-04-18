@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
+// Delete commented-out code before submitting it
 import './App.css';
 
 
@@ -10,12 +10,16 @@ var App = React.createClass({
     return {
       items: [],
       counter: 0,
+      // I'd name this 'editingIndex', it's more clear what it does then
       editFlag: undefined,
+      // I'd make these just the strings 'All','Active', etc to be more readable
+      // or have these be integers, but not strings of integers
       selectedFilter: '0'
     }
   },
   // Function to pass to addItem object, takes an item, stores, updates
   addItem: function(item){
+    // Only modify state using setState, don't directly increment counter.
     this.state.items.push(item);
     this.state.counter++;
     this.setState({
@@ -26,8 +30,9 @@ var App = React.createClass({
   editItem: function(item){
     const items = this.state.items;
     items[this.state.editFlag] = {name: item.name, checked: items[this.state.editFlag].checked};
-    this.setState(items);
+    // You can combine these two setState's like so:
     this.setState({
+      items,
       editFlag: undefined
     });
   },
@@ -136,6 +141,8 @@ var List = React.createClass({
   },
   // turns the items array from props into ListItems, renders into list
   render: function() {
+    // No need to save all these in variables, just reference props when
+    // you need to access them.
     var toggleChecked = this.props.toggleChecked;
     var onClickEdit = this.props.clickEdit;
     var editItem = this.props.editItem;
